@@ -28,7 +28,7 @@ export default function Navbar() {
   }, [open]);
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth > 900) setOpen(false); };
+    const onResize = () => { if (window.innerWidth > 1023) setOpen(false); };
     addEventListener("resize", onResize);
     return () => removeEventListener("resize", onResize);
   }, []);
