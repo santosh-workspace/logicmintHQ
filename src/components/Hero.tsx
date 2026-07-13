@@ -9,7 +9,7 @@ const EASE = "cubic-bezier(.22,1,.36,1)";
 function Chars({ text, lineIndex }: { text: string; lineIndex: number }) {
   return (
     <>
-      {[...text].map((c, i) => (
+      {Array.from(text).map((c, i) => (
         <span
           key={i}
           className="ch"
