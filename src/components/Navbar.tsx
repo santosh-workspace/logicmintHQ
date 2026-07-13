@@ -27,6 +27,12 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth > 900) setOpen(false); };
+    addEventListener("resize", onResize);
+    return () => removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <>
       <nav id="nav" className={scrolled ? "scrolled" : ""} aria-label="Main navigation">
@@ -52,16 +58,32 @@ export default function Navbar() {
         </button>
       </nav>
       <div id="mobileMenu" className={open ? "open" : ""}>
-        {[...LINKS.slice(0, 4), { href: "#faq", label: "FAQ" }, { href: "#contact", label: "Contact" }].map((l, i) => (
+        <div className="mm-top">
+          <a className="brand" href="#hero" aria-label="LogicMintHQ home" onClick={() => setOpen(false)}>
+            <LogoMark />
+            <BrandWord />
+          </a>
+        </div>
+        <div className="mm-links">
+          {[...LINKS.slice(0, 4), { href: "#faq", label: "FAQ" }, { href: "#contact", label: "Contact" }].map((l, i) => (
+            <a
+              key={l.label}
+              href={l.href}
+              style={{ transitionDelay: open ? `${0.06 * i + 0.1}s` : "0s" }}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </a>
+          ))}
           <a
-            key={l.label}
-            href={l.href}
-            style={{ transitionDelay: open ? `${0.06 * i + 0.1}s` : "0s" }}
+            href="#contact"
+            className="btn btn-primary btn-sm mm-cta"
+            style={{ color: "#04121f", transitionDelay: open ? "0.46s" : "0s" }}
             onClick={() => setOpen(false)}
           >
-            {l.label}
+            Book a Call
           </a>
-        ))}
+        </div>
       </div>
     </>
   );
