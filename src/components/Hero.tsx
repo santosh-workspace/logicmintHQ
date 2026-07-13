@@ -7,19 +7,38 @@ const LINE2 = "with Intelligent AI";
 const EASE = "cubic-bezier(.22,1,.36,1)";
 
 function Chars({ text, lineIndex }: { text: string; lineIndex: number }) {
-  return (
-    <>
-      {Array.from(text).map((c, i) => (
-        <span
-          key={i}
-          className="ch"
-          style={{ animationDelay: `${0.55 + lineIndex * 0.28 + i * 0.028}s` }}
-        >
-          {c === " " ? " " : c}
+  const words = text.split(" ");
+  let i = 0;
+  const nodes: JSX.Element[] = [];
+
+  words.forEach((word, wi) => {
+    nodes.push(
+      <span className="word" key={`w${wi}`}>
+        {Array.from(word).map((c) => {
+          const idx = i++;
+          return (
+            <span
+              key={idx}
+              className="ch"
+              style={{ animationDelay: `${0.55 + lineIndex * 0.28 + idx * 0.028}s` }}
+            >
+              {c}
+            </span>
+          );
+        })}
+      </span>
+    );
+    if (wi < words.length - 1) {
+      const idx = i++;
+      nodes.push(
+        <span key={`s${wi}`} className="ch" style={{ animationDelay: `${0.55 + lineIndex * 0.28 + idx * 0.028}s` }}>
+          {" "}
         </span>
-      ))}
-    </>
-  );
+      );
+    }
+  });
+
+  return <>{nodes}</>;
 }
 
 export default function Hero() {
