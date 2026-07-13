@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="lmMint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+    <linearGradient id="lmChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset=".5" stop-color="#94a3b8"/><stop offset="1" stop-color="#e2e8f0"/></linearGradient>
+  </defs>
+  <rect x="14" y="18" width="16" height="76" rx="3" fill="url(#lmMint)"/>
+  <rect x="14" y="82" width="58" height="12" rx="3" fill="url(#lmMint)"/>
+  <path d="M40 88 V26 h13 l14 30 14-30 h13 v62 h-13 V52 l-14 28 -14-28 v36 z" fill="url(#lmChrome)"/>
+  <text x="98" y="100" text-anchor="end" font-family="sans-serif" font-weight="700" font-size="19" fill="#cbd5e1">HQ</text>
+</svg>
