@@ -13,7 +13,11 @@ function Chars({ text, lineIndex }: { text: string; lineIndex: number }) {
 
   words.forEach((word, wi) => {
     nodes.push(
-      <span className="word" key={`w${wi}`}>
+      <span
+        className="word"
+        key={`w${wi}`}
+        style={wi < words.length - 1 ? { marginRight: "0.32em" } : undefined}
+      >
         {Array.from(word).map((c) => {
           const idx = i++;
           return (
@@ -29,12 +33,7 @@ function Chars({ text, lineIndex }: { text: string; lineIndex: number }) {
       </span>
     );
     if (wi < words.length - 1) {
-      const idx = i++;
-      nodes.push(
-        <span key={`s${wi}`} className="ch" style={{ animationDelay: `${0.55 + lineIndex * 0.28 + idx * 0.028}s` }}>
-          {'\u00A0'}
-        </span>
-      );
+      i++;
     }
   });
 
