@@ -73,11 +73,6 @@ export default function Navbar() {
         </button>
       </nav>
       <div id="mobileMenu" className={open ? "open" : ""} onClick={handleMenuOverlayClick} ref={mobileMenuRef}>
-        <div className="mm-top">
-          <button className="mm-close" type="button" aria-label="Close menu" onClick={() => setOpen(false)}>
-            ×
-          </button>
-        </div>
         <div className="mm-links">
           {[...LINKS.slice(0, 4), { href: "#faq", label: "FAQ" }, { href: "#contact", label: "Contact" }].map((l, i) => (
             <a
