@@ -5,6 +5,7 @@ import GradientDefs from "@/components/GradientDefs";
 import Loader from "@/components/Loader";
 import Cursor from "@/components/Cursor";
 import Effects from "@/components/Effects";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const space = Space_Grotesk({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Cursor />
         <Loader />
         {children}
+        <WhatsAppFloat />
         <Effects />
       </body>
     </html>

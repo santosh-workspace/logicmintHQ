@@ -44,7 +44,7 @@ export default function Contact() {
               <div className="wi">✉</div>
               <div><b>hello@logicminthq.com</b><span>Email us anytime</span></div>
             </a>
-            <a className="way" href="https://wa.me/0000000000" target="_blank" rel="noopener noreferrer">
+            <a className="way" href="https://wa.me/918956467676" target="_blank" rel="noopener noreferrer">
               <div className="wi">✆</div>
               <div><b>Chat on WhatsApp</b><span>Fastest response</span></div>
             </a>
