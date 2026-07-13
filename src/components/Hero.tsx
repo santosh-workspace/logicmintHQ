@@ -210,9 +210,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <div className="scroll-hint" aria-hidden="true">
-        Scroll<div className="stem" />
-      </div>
     </header>
   );
 }
