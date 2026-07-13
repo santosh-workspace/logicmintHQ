@@ -101,6 +101,8 @@ nav.scrolled{background:rgba(5,8,22,.72);backdrop-filter:blur(18px);-webkit-back
 .btn-primary:hover{box-shadow:0 12px 40px -8px rgba(16,185,129,.5)}
 .btn-ghost{color:var(--txt);background:rgba(148,163,184,.07);border:1px solid var(--line);backdrop-filter:blur(8px)}
 .btn-ghost:hover{border-color:rgba(96,165,250,.5);background:rgba(96,165,250,.08)}
+.btn-whatsapp{color:#04121f;background:linear-gradient(100deg,#25D366,#10B981);border:1px solid transparent}
+.btn-whatsapp:hover{box-shadow:0 14px 40px -10px rgba(37,211,102,.55);background:linear-gradient(100deg,#22c15d,#0fbf7e)}
 .btn-sm{padding:11px 22px;font-size:14px}
 .btn .arr{transition:transform .3s var(--ease)}
 .btn:hover .arr{transform:translateX(4px)}

@@ -62,7 +62,7 @@ export default function Navbar() {
           {LINKS.map((l) => (
             <a key={l.href} href={l.href}>{l.label}</a>
           ))}
-          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm magnetic" style={{ minWidth: "140px" }}>
+          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm magnetic" style={{ minWidth: "140px" }}>
             WhatsApp
           </a>
           <a href="#contact" className="btn btn-primary btn-sm magnetic" style={{ color: "#04121f" }}>
@@ -94,7 +94,7 @@ export default function Navbar() {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost btn-sm mm-cta"
+            className="btn btn-whatsapp btn-sm mm-cta"
             style={{ transitionDelay: open ? "0.46s" : "0s" }}
             onClick={() => setOpen(false)}
           >
