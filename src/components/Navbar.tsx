@@ -74,10 +74,6 @@ export default function Navbar() {
       </nav>
       <div id="mobileMenu" className={open ? "open" : ""} onClick={handleMenuOverlayClick} ref={mobileMenuRef}>
         <div className="mm-top">
-          <a className="brand" href="#hero" aria-label="LogicMintHQ home" onClick={() => setOpen(false)}>
-            <LogoMark />
-            <BrandWord />
-          </a>
           <button className="mm-close" type="button" aria-label="Close menu" onClick={() => setOpen(false)}>
             ×
           </button>
