@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "LogicMintHQ builds premium websites, AI chatbots, AI voice agents, and intelligent automation systems that help businesses increase revenue, automate operations, and scale effortlessly.",
   icons: { icon: "/favicon.svg" },
   openGraph: {
-    title: "LogicMintHQ — Transform Business with Intelligent AI",
+    title: "LogicMintHQ — Build Smarter Businesses with AI",
     description:
       "Premium websites, AI chatbots, voice agents & automation systems engineered for growth.",
     type: "website",
