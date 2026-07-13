@@ -32,7 +32,7 @@ function Chars({ text, lineIndex }: { text: string; lineIndex: number }) {
       const idx = i++;
       nodes.push(
         <span key={`s${wi}`} className="ch" style={{ animationDelay: `${0.55 + lineIndex * 0.28 + idx * 0.028}s` }}>
-          {" "}
+          {'\u00A0'}
         </span>
       );
     }
