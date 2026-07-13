@@ -34,7 +34,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="nav-shell">
+    <>
       <nav id="nav" className={scrolled ? "scrolled" : ""} aria-label="Main navigation">
         <a className="brand" href="#hero" aria-label="LogicMintHQ home">
           <LogoMark />
@@ -85,6 +85,6 @@ export default function Navbar() {
           </a>
         </div>
       </div>
-    </div>
+    </>
   );
 }

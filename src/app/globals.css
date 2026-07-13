@@ -69,16 +69,16 @@ nav.scrolled{background:rgba(5,8,22,.72);backdrop-filter:blur(18px);-webkit-back
 .burger.open span:nth-child(1){top:22px;transform:rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){top:22px;transform:rotate(-45deg)}
-#mobileMenu{position:absolute;top:100%;left:0;right:0;z-index:1100;background:rgba(4,6,16,.96);backdrop-filter:blur(20px);display:flex;flex-direction:column;opacity:0;visibility:hidden;max-height:0;overflow:hidden;transition:opacity .35s var(--ease),visibility .35s var(--ease),max-height .35s var(--ease)}
-#mobileMenu.open{opacity:1;visibility:visible;max-height:460px}
+#mobileMenu{position:fixed;inset:0;z-index:1100;background:rgba(4,6,16,.96);backdrop-filter:blur(20px);display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:.45s var(--ease)}
+#mobileMenu.open{opacity:1;visibility:visible}
 .mm-top{flex-shrink:0;display:flex;align-items:center;height:76px;padding:0 clamp(20px,4vw,56px);opacity:0;transform:translateY(-10px);transition:.5s var(--ease) .1s}
 #mobileMenu.open .mm-top{opacity:1;transform:none}
-.mm-links{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:10px;padding:18px clamp(20px,4vw,56px) 24px}
-.mm-links a{font-family:var(--font-d);font-size:clamp(18px,4vw,24px);font-weight:600;padding:10px 0;color:var(--txt);opacity:0;transform:translateY(18px);transition:.5s var(--ease)}
+.mm-links{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 20px 50px}
+.mm-links a{font-family:var(--font-d);font-size:clamp(22px,6vw,34px);font-weight:600;padding:8px;color:var(--txt);opacity:0;transform:translateY(18px);transition:.5s var(--ease)}
 #mobileMenu.open .mm-links a{opacity:1;transform:none}
 .mm-cta{margin-top:16px;opacity:0;transform:translateY(18px);transition:.5s var(--ease)}
 #mobileMenu.open .mm-cta{opacity:1;transform:none}
-@media(max-width:1023px){.nav-shell{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,8,22,.84);backdrop-filter:blur(20px)}nav{padding:12px clamp(16px,4vw,24px);height:auto;align-items:flex-start;gap:14px;flex-wrap:wrap}.brand{width:100%;justify-content:space-between}.nav-links{display:none}.burger{display:block}}
+@media(max-width:1023px){.nav-links{display:none}.burger{display:block}}
 
 /* logo */
 .brand{display:flex;align-items:center;gap:11px}
