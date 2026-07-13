@@ -3,6 +3,9 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import LogoMark from "./LogoMark";
 import BrandWord from "./BrandWord";
 
+const WHATSAPP_NUMBER = "918956467676";
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
+
 const LINKS = [
   { href: "#services", label: "Services" },
   { href: "#showcase", label: "Showcase" },
@@ -59,6 +62,9 @@ export default function Navbar() {
           {LINKS.map((l) => (
             <a key={l.href} href={l.href}>{l.label}</a>
           ))}
+          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm magnetic" style={{ minWidth: "140px" }}>
+            WhatsApp
+          </a>
           <a href="#contact" className="btn btn-primary btn-sm magnetic" style={{ color: "#04121f" }}>
             Book a Call
           </a>
@@ -85,9 +91,19 @@ export default function Navbar() {
             </a>
           ))}
           <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost btn-sm mm-cta"
+            style={{ transitionDelay: open ? "0.46s" : "0s" }}
+            onClick={() => setOpen(false)}
+          >
+            WhatsApp
+          </a>
+          <a
             href="#contact"
             className="btn btn-primary btn-sm mm-cta"
-            style={{ color: "#04121f", transitionDelay: open ? "0.46s" : "0s" }}
+            style={{ color: "#04121f", transitionDelay: open ? "0.52s" : "0s" }}
             onClick={() => setOpen(false)}
           >
             Book a Call
