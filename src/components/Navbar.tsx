@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import LogoMark from "./LogoMark";
 import BrandWord from "./BrandWord";
 
@@ -27,11 +27,26 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const onResize = () => { if (window.innerWidth > 1023) setOpen(false); };
     addEventListener("resize", onResize);
     return () => removeEventListener("resize", onResize);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  const handleMenuOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.currentTarget === event.target) setOpen(false);
+  };
 
   return (
     <>
@@ -57,12 +72,15 @@ export default function Navbar() {
           <span /><span /><span />
         </button>
       </nav>
-      <div id="mobileMenu" className={open ? "open" : ""}>
+      <div id="mobileMenu" className={open ? "open" : ""} onClick={handleMenuOverlayClick} ref={mobileMenuRef}>
         <div className="mm-top">
           <a className="brand" href="#hero" aria-label="LogicMintHQ home" onClick={() => setOpen(false)}>
             <LogoMark />
             <BrandWord />
           </a>
+          <button className="mm-close" type="button" aria-label="Close menu" onClick={() => setOpen(false)}>
+            ×
+          </button>
         </div>
         <div className="mm-links">
           {[...LINKS.slice(0, 4), { href: "#faq", label: "FAQ" }, { href: "#contact", label: "Contact" }].map((l, i) => (
