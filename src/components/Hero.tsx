@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import CountUp from "./CountUp";
 
-const LINE1 = "Build Smarter Businesses";
+const LINE1 = "Build Smarter Businesses with AI";
 const LINE2 = "with AI";
 const EASE = "cubic-bezier(.22,1,.36,1)";
 
