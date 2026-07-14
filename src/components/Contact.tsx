@@ -40,9 +40,9 @@ export default function Contact() {
           </h2>
           <p className="lede rv">Book a free consultation — we&apos;ll respond within one business day.</p>
           <div className="contact-ways rv">
-            <a className="way" href="mailto:hello@logicminthq.com">
+            <a className="way" href="mailto:logicminthq@gmail.com">
               <div className="wi">✉</div>
-              <div><b>hello@logicminthq.com</b><span>Email us anytime</span></div>
+              <div><b>logicminthq@gmail.com</b><span>Email us anytime</span></div>
             </a>
             <a className="way" href="https://wa.me/918956467676" target="_blank" rel="noopener noreferrer">
               <div className="wi">✆</div>
