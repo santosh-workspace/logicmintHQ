@@ -49,6 +49,7 @@ const SERVICES: Svc[] = [
 export default function Services() {
   return (
     <section id="services">
+      <span id="areas" className="section-anchor" />
       <div className="wrap center">
         <div className="kicker rv">Services</div>
         <h2 className="h2 rv">

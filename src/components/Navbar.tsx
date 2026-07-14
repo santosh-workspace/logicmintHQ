@@ -6,11 +6,15 @@ import BrandWord from "./BrandWord";
 const WHATSAPP_NUMBER = "918956467676";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 
+const WHATSAPP_NUMBER = "918956467676";
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
+const CALL_LINK = "tel:+918956467676";
+
 const LINKS = [
+  { href: "#hero", label: "Home" },
   { href: "#services", label: "Services" },
-  { href: "#showcase", label: "Showcase" },
-  { href: "#work", label: "Work" },
-  { href: "#process", label: "Process" },
+  { href: "#areas", label: "Areas" },
+  { href: "#work", label: "Our Work" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -62,11 +66,13 @@ export default function Navbar() {
           {LINKS.map((l) => (
             <a key={l.href} href={l.href}>{l.label}</a>
           ))}
+        </div>
+        <div className="nav-actions">
           <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm magnetic" style={{ minWidth: "140px" }}>
             WhatsApp
           </a>
-          <a href="#contact" className="btn btn-primary btn-sm magnetic" style={{ color: "#04121f" }}>
-            Book a Call
+          <a href={CALL_LINK} className="btn btn-call btn-sm magnetic" style={{ minWidth: "120px" }}>
+            Call
           </a>
         </div>
         <button
@@ -80,7 +86,7 @@ export default function Navbar() {
       </nav>
       <div id="mobileMenu" className={open ? "open" : ""} onClick={handleMenuOverlayClick} ref={mobileMenuRef}>
         <div className="mm-links">
-          {[...LINKS.slice(0, 4), { href: "#faq", label: "FAQ" }, { href: "#contact", label: "Contact" }].map((l, i) => (
+          {LINKS.map((l, i) => (
             <a
               key={l.label}
               href={l.href}
@@ -101,12 +107,12 @@ export default function Navbar() {
             WhatsApp
           </a>
           <a
-            href="#contact"
-            className="btn btn-primary btn-sm mm-cta"
-            style={{ color: "#04121f", transitionDelay: open ? "0.52s" : "0s" }}
+            href={CALL_LINK}
+            className="btn btn-call btn-sm mm-cta"
+            style={{ transitionDelay: open ? "0.52s" : "0s" }}
             onClick={() => setOpen(false)}
           >
-            Book a Call
+            Call
           </a>
         </div>
       </div>
