@@ -5,9 +5,6 @@ import BrandWord from "./BrandWord";
 
 const WHATSAPP_NUMBER = "918956467676";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-const WHATSAPP_NUMBER = "918956467676";
-const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const CALL_LINK = "tel:+918956467676";
 
 const LINKS = [
