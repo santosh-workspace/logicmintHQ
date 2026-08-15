@@ -58,13 +58,13 @@ export default function Contact() {
         <form className="cform rv" onSubmit={submit} noValidate>
           <div className={`fld ${errors.name ? "err" : ""}`}>
             <label htmlFor="fName">Your name</label>
-            <input id="fName" type="text" autoComplete="name" placeholder="Jane Smith" value={values.name} onChange={set("name")} required />
-            <span className="emsg">Please enter your name.</span>
+            <input id="fName" type="text" autoComplete="name" placeholder="Jane Smith" value={values.name} onChange={set("name")} required aria-invalid={!!errors.name} aria-describedby="fNameErr" />
+            <span className="emsg" id="fNameErr">Please enter your name.</span>
           </div>
           <div className={`fld ${errors.email ? "err" : ""}`}>
             <label htmlFor="fEmail">Email address</label>
-            <input id="fEmail" type="email" autoComplete="email" placeholder="jane@company.com" value={values.email} onChange={set("email")} required />
-            <span className="emsg">Please enter a valid email.</span>
+            <input id="fEmail" type="email" inputMode="email" autoComplete="email" autoCapitalize="none" spellCheck={false} placeholder="jane@company.com" value={values.email} onChange={set("email")} required aria-invalid={!!errors.email} aria-describedby="fEmailErr" />
+            <span className="emsg" id="fEmailErr">Please enter a valid email.</span>
           </div>
           <div className="fld">
             <label htmlFor="fSvc">What do you need?</label>
@@ -80,8 +80,8 @@ export default function Contact() {
           </div>
           <div className={`fld ${errors.message ? "err" : ""}`}>
             <label htmlFor="fMsg">Tell us about your project</label>
-            <textarea id="fMsg" placeholder="Goals, timeline, current tools…" value={values.message} onChange={set("message")} required />
-            <span className="emsg">A few words help us prepare.</span>
+            <textarea id="fMsg" rows={4} placeholder="Goals, timeline, current tools…" value={values.message} onChange={set("message")} required aria-invalid={!!errors.message} aria-describedby="fMsgErr" />
+            <span className="emsg" id="fMsgErr">A few words help us prepare.</span>
           </div>
           <button type="submit" className="btn btn-primary magnetic" style={{ width: "100%", justifyContent: "center" }}>
             Send Message <span className="arr">→</span>

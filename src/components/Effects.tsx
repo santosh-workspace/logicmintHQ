@@ -24,9 +24,12 @@ export default function Effects() {
       io.observe(el);
     });
 
+    // Everything below is pointer-driven decoration: on touch devices it can
+    // never fire, so the listeners are not attached at all.
+    if (!fine || reduce) return () => io.disconnect();
+
     // Magnetic buttons + 3D tilt cards (event delegation)
     const move = (e: MouseEvent) => {
-      if (!fine || reduce) return;
       const t = e.target as HTMLElement;
       const btn = t.closest?.<HTMLElement>(".magnetic");
       if (btn) {
@@ -56,14 +59,20 @@ export default function Effects() {
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseout", out);
 
-    // Aurora parallax
+    // Aurora parallax — moving heavily blurred layers is expensive, so it is
+    // desktop-only and coalesced into one rAF per frame.
+    const a1 = document.querySelector<HTMLElement>(".aurora .a1");
+    const a2 = document.querySelector<HTMLElement>(".aurora .a2");
+    let ticking = false;
     const onScroll = () => {
-      if (reduce) return;
-      const y = scrollY;
-      const a1 = document.querySelector<HTMLElement>(".aurora .a1");
-      const a2 = document.querySelector<HTMLElement>(".aurora .a2");
-      if (a1) a1.style.translate = `0 ${y * 0.06}px`;
-      if (a2) a2.style.translate = `0 ${y * -0.04}px`;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        if (a1) a1.style.translate = `0 ${y * 0.06}px`;
+        if (a2) a2.style.translate = `0 ${y * -0.04}px`;
+        ticking = false;
+      });
     };
     addEventListener("scroll", onScroll, { passive: true });
 

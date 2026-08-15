@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import GradientDefs from "@/components/GradientDefs";
@@ -27,11 +27,14 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = {
+/* No maximumScale: pinch-zoom must stay available (WCAG 1.4.4).
+   viewportFit:"cover" lets the layout use env(safe-area-inset-*) on notched phones. */
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  minimumScale: 1,
-  maximumScale: 1,
+  viewportFit: "cover",
+  themeColor: "#050816",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

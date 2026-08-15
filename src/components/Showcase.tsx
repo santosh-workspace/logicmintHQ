@@ -48,13 +48,14 @@ export default function Showcase() {
   const [visible, setVisible] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  /* Start demos when the stage scrolls into view */
+  /* Demos run only while the stage is on screen — off-screen timers are pure
+     battery drain on phones. */
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([en]) => { if (en.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.3 }
+      ([en]) => setVisible(en.isIntersecting),
+      { threshold: 0.25 }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -87,15 +88,17 @@ export default function Showcase() {
 
   /* Voice captions rotation */
   useEffect(() => {
+    if (!visible || tab !== "voice") return;
     const id = setInterval(() => setCap((c) => (c + 1) % CAPS.length), 3400);
     return () => clearInterval(id);
-  }, []);
+  }, [visible, tab]);
 
   /* Workflow node lighting */
   useEffect(() => {
+    if (!visible || tab !== "flow") return;
     const id = setInterval(() => setLit((l) => (l + 1) % NODES.length), 1100);
     return () => clearInterval(id);
-  }, []);
+  }, [visible, tab]);
 
   return (
     <section id="showcase" style={{ background: "linear-gradient(180deg,transparent,rgba(7,11,29,.6),transparent)" }}>

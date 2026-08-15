@@ -19,14 +19,18 @@ export default function CountUp({ to, decimals = 0, suffix = "", format, classNa
       ([en]) => {
         if (!en.isIntersecting) return;
         obs.disconnect();
+        const fmt = (v: number) =>
+          (format === "k" ? (Math.round(v / 100) / 10).toFixed(1) + "k" : v.toFixed(decimals)) + suffix;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          el.textContent = fmt(to);
+          return;
+        }
         const t0 = performance.now();
         const dur = 1800;
         const tick = (t: number) => {
           const p = Math.min((t - t0) / dur, 1);
           const e = 1 - Math.pow(1 - p, 4);
-          const v = to * e;
-          const txt = format === "k" ? (Math.round(v / 100) / 10).toFixed(1) + "k" : v.toFixed(decimals);
-          el.textContent = txt + suffix;
+          el.textContent = fmt(to * e);
           if (p < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);

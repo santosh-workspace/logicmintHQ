@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import CountUp from "./CountUp";
 
-const LINE1 = "Build Smarter Businesses with AI";
+const LINE1 = "Build Smarter Businesses";
 const LINE2 = "with AI";
 const EASE = "cubic-bezier(.22,1,.36,1)";
 
@@ -45,7 +45,10 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const holoRef = useRef<HTMLDivElement>(null);
 
-  /* Neural network canvas */
+  /* Neural network canvas.
+     Mobile budget: fewer particles and a shorter link radius (the pair loop is
+     O(n²)), no pointer tracking on touch, and the loop is parked whenever the
+     hero scrolls away or the tab is hidden. */
   useEffect(() => {
     const hero = heroRef.current;
     const cv = canvasRef.current;
@@ -53,15 +56,20 @@ export default function Hero() {
     const ctx = cv.getContext("2d");
     if (!ctx) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    let W = 0, H = 0, raf = 0;
+    const MAX_PTS = fine ? 90 : 30;
+    const LINK = fine ? 130 : 92;
+
+    let W = 0, H = 0, raf = 0, lastW = 0, lastH = 0, running = false, onScreen = true;
     let pts: { x: number; y: number; vx: number; vy: number; r: number }[] = [];
     const mouse = { x: -9999, y: -9999 };
 
     const size = () => {
       W = cv.width = hero.offsetWidth;
       H = cv.height = hero.offsetHeight;
-      const n = Math.min(90, Math.floor((W * H) / 16000));
+      lastW = W; lastH = H;
+      const n = Math.min(MAX_PTS, Math.floor((W * H) / 16000));
       pts = Array.from({ length: n }, () => ({
         x: Math.random() * W,
         y: Math.random() * H,
@@ -71,16 +79,6 @@ export default function Hero() {
       }));
     };
     size();
-    addEventListener("resize", size);
-
-    const mm = (e: MouseEvent) => {
-      const r = cv.getBoundingClientRect();
-      mouse.x = e.clientX - r.left;
-      mouse.y = e.clientY - r.top;
-    };
-    const ml = () => { mouse.x = -9999; mouse.y = -9999; };
-    hero.addEventListener("mousemove", mm);
-    hero.addEventListener("mouseleave", ml);
 
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
@@ -88,34 +86,87 @@ export default function Hero() {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
-        const dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (dm < 160) { p.x += ((p.x - mouse.x) / dm) * 0.6; p.y += ((p.y - mouse.y) / dm) * 0.6; }
+        if (fine) {
+          const dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+          if (dm < 160) { p.x += ((p.x - mouse.x) / dm) * 0.6; p.y += ((p.y - mouse.y) / dm) * 0.6; }
+        }
       }
+      ctx.lineWidth = 1;
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
           const a = pts[i], b = pts[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < 130) {
-            ctx.strokeStyle = `rgba(96,165,250,${(1 - d / 130) * 0.16})`;
-            ctx.lineWidth = 1;
+          if (d < LINK) {
+            ctx.strokeStyle = `rgba(96,165,250,${(1 - d / LINK) * 0.16})`;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
       }
+      ctx.fillStyle = "rgba(52,211,153,.55)";
       for (const p of pts) {
-        ctx.fillStyle = "rgba(52,211,153,.55)";
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill();
       }
-      if (!reduce) raf = requestAnimationFrame(draw);
+      if (running) raf = requestAnimationFrame(draw);
     };
-    draw();
 
-    return () => {
-      cancelAnimationFrame(raf);
-      removeEventListener("resize", size);
-      hero.removeEventListener("mousemove", mm);
-      hero.removeEventListener("mouseleave", ml);
+    const start = () => {
+      if (running || reduce) return;
+      running = true;
+      raf = requestAnimationFrame(draw);
     };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    if (reduce) {
+      draw();                      // one static frame, no loop
+    } else {
+      const io = new IntersectionObserver(([en]) => {
+        onScreen = en.isIntersecting;
+        if (onScreen && !document.hidden) start(); else stop();
+      });
+      io.observe(hero);
+      const onVisibility = () => {
+        if (document.hidden) stop(); else if (onScreen) start();
+      };
+      document.addEventListener("visibilitychange", onVisibility);
+      start();
+
+      /* Mobile browsers fire resize when the URL bar hides — only rebuild when
+         the width really changed (or the device rotated). */
+      let t = 0;
+      const onResize = () => {
+        clearTimeout(t);
+        t = window.setTimeout(() => {
+          if (Math.abs(hero.offsetWidth - lastW) > 40 || Math.abs(hero.offsetHeight - lastH) > 180) size();
+        }, 200);
+      };
+      addEventListener("resize", onResize, { passive: true });
+
+      let mm: ((e: MouseEvent) => void) | undefined;
+      let ml: (() => void) | undefined;
+      if (fine) {
+        mm = (e: MouseEvent) => {
+          const r = cv.getBoundingClientRect();
+          mouse.x = e.clientX - r.left;
+          mouse.y = e.clientY - r.top;
+        };
+        ml = () => { mouse.x = -9999; mouse.y = -9999; };
+        hero.addEventListener("mousemove", mm);
+        hero.addEventListener("mouseleave", ml);
+      }
+
+      return () => {
+        stop();
+        io.disconnect();
+        document.removeEventListener("visibilitychange", onVisibility);
+        clearTimeout(t);
+        removeEventListener("resize", onResize);
+        if (mm) hero.removeEventListener("mousemove", mm);
+        if (ml) hero.removeEventListener("mouseleave", ml);
+      };
+    }
   }, []);
 
   /* Holographic card tilt */
@@ -152,7 +203,10 @@ export default function Hero() {
           </span>
           <h1 className="hero-h1" aria-label={`${LINE1} ${LINE2}`}>
             <span className="ln"><Chars text={LINE1} lineIndex={0} /></span>
-            <span className="ln grad-text"><Chars text={LINE2} lineIndex={1} /></span>
+            {/* Animated per-character spans get their own compositing layer, which
+                an ancestor's background-clip:text cannot paint through — so the
+                gradient line animates as one element instead. */}
+            <span className="ln ln-grad grad-text">{LINE2}</span>
           </h1>
           <p className="hero-sub">
             We build premium websites, AI chatbots, AI voice agents, and intelligent automation
